@@ -7,13 +7,13 @@ const {
     seedUser
 } = require('./seedData.js')
 
-describe("Board, Cheese and User Models", () => {
+describe("Models test", () => {
 
     beforeAll(async () => {
         await sequelize.sync({ force: true });
     });
 
-    test("test association with user and board (one-to-many)", async () => {
+    test("test user and board is one-to-many", async () => {
         await User.bulkCreate(seedUser)
         await Board.bulkCreate(seedBoard)
 
@@ -31,7 +31,7 @@ describe("Board, Cheese and User Models", () => {
         expect(userBoards.length).toBe(3)
     })
 
-    test("test association with board and cheese (many-to-many)", async () => {
+    test("test board and cheese many-to-many", async () => {
 
         await Board.bulkCreate(seedBoard)
         await Cheese.bulkCreate(seedCheese)
@@ -57,7 +57,7 @@ describe("Board, Cheese and User Models", () => {
         expect(boardOfCheeses.length).toBe(cheeseOfBoards.length)
     })
 
-    test("test edger loading that a board can be loaded with its cheeses", async () => {
+    test("board can be loaded with cheeses", async () => {
         const userBoards = await User.findAll({
             include: [
                 {model: Board}
